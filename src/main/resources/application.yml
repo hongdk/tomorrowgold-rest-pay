@@ -1,0 +1,44 @@
+#DUBBO
+dubbox:
+  application:
+    name: tomorrowgold-service-portal
+    organization: dubbox
+    owner: tomorrowgold
+  registry:
+    protocol: zookeeper
+    address: 127.0.0.1:2181
+  annotation:
+    package: com.tomorrowgold.controller
+  monitor:
+    enabled: false
+    address: 127.0.0.1:6060
+    username: admin
+    password: admin
+
+spring.freemarker:
+    #关闭缓存
+    cache: false
+    #模板加载的位置
+    template-loader-path: classpath:/templates
+    #前缀
+    suffix: .html
+
+# Redis
+redis:
+  cluster: false
+  single-host: 127.0.0.1
+  single-port: 6379
+  password:
+redisKey:
+  # 缓存时间 默认半小时
+  expire_time: 1800
+
+server:
+  port: 8005
+
+
+# swagger2
+swagger2.package: com.tomorrowgold.controller
+swagger2.title: tomoroowgold-mall
+
+
