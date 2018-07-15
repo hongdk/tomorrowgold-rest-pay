@@ -20,12 +20,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.alipay.api.AlipayApiException;
 import com.alipay.api.internal.util.AlipaySignature;
 import com.alipay.trade.config.Configs;
-import com.tomorrowgold.facade.SystradeTradeFacade;
+//import com.tomorrowgold.facade.SystradeTradeFacade;
 import com.tomorrowgold.pay.alipay.service.IAliPayService;
 import com.tomorrowgold.pay.common.constants.Constants;
 import com.tomorrowgold.pay.common.model.PayOrder;
@@ -45,8 +46,8 @@ public class AliPayController {
 	@Autowired
 	private IAliPayService aliPayService;
 	
-	@Reference(version = com.tomorrowgold.common.constant.Constants.DUBBO_SERVICE_VERSION)
-    SystradeTradeFacade systradeTradeFacade;
+	/*@Reference(version = com.tomorrowgold.common.constant.Constants.DUBBO_SERVICE_VERSION)
+    SystradeTradeFacade systradeTradeFacade;*/
 	
 	/**
 	 * 支付测试主页
@@ -93,11 +94,12 @@ public class AliPayController {
 	 */
 	@ApiOperation(value="app支付")
 	@RequestMapping(value="appPay",method=RequestMethod.POST)
+	@ResponseBody
     public String  appPay(PayOrder product,ModelMap map) {
 		logger.info("app支付服务端，订单编号:"+product.getOutTradeNo());
 		String orderString  =  aliPayService.appPay(product);
 		map.addAttribute("orderString", orderString);
-		return "alipay/pay";
+		return orderString;
     }
 	
 	
@@ -210,10 +212,10 @@ public class AliPayController {
 				} else if (status.equals("TRADE_SUCCESS") || status.equals("TRADE_FINISHED")) { // 如果状态是已经支付成功
 					logger.info("(支付宝订单号:"+outtradeno+"付款成功)");
 					//这里 根据实际业务场景 做相应的操作
-					Long[] ids = new Long[1];
+					/*Long[] ids = new Long[1];
 					Long lgOuttradeno = Long.parseLong(outtradeno);
 					ids[0] = lgOuttradeno;
-					systradeTradeFacade.updatepaySuccess(ids);
+					systradeTradeFacade.updatepaySuccess(ids);*/
 				} else {
 					
 				}
